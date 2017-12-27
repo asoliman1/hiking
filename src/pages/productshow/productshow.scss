@@ -1,0 +1,47 @@
+page-productshow {
+ 
+ .home-title{
+              height:60px;
+              margin-top:-65px;
+              background-color: rgba( black, 0.6)
+            }
+
+
+            
+.price-title{
+  background-color: #3ec2d6;
+  height: 90px;
+  width: 90px;
+  border-bottom-left-radius: 20px;
+  margin-inline-start: 75%;
+  margin-top: -78%;    
+}
+.contact-title{
+  border-bottom: 2px solid #3ec2d6;
+  text-align: right;
+
+}
+.frame{
+  
+  border-style: solid;
+  border-color: rgb(225, 225, 225);
+  background-image: -moz-linear-gradient( 180deg, rgb(241,241,241) 0%, rgb(255,255,255) 100%);
+  background-image: -webkit-linear-gradient( 180deg, rgb(241,241,241) 0%, rgb(255,255,255) 100%);
+  background-image: -ms-linear-gradient( 180deg, rgb(241,241,241) 0%, rgb(255,255,255) 100%);
+  background: linear-gradient( 180deg, rgb(241,241,241) 0%, rgb(255,255,255) 100%)
+
+
+}
+.prices{
+  background-color: white;
+  margin: 10px;
+  padding: 10px;
+  border:0.5px solid lightgrey;
+  h3{
+    font-size: 15px;
+  }
+ 
+}
+
+}
+

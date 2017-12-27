@@ -1,0 +1,146 @@
+<ion-header>
+
+  <ion-toolbar color="header">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title> {{product.name}} </ion-title>
+    <ion-buttons right>
+      <button ion-button (click)="goBack()">
+        <ion-icon ><img style="height:20%;width:30%" src="assets/icon/back.png" ></ion-icon>
+      </button>
+    </ion-buttons>
+    
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content text-center>
+      <ion-slides style="width:100%;height:200px" dir="rtl" pager=true paginationType="bullets" >
+        <ion-slide style=""  *ngFor="let photo of product.files">
+        <img style="width:100%;max-height:200px" (click)="showFullscreen(photoUrl+photo.path+photo.file)" src="{{photoUrl}}{{photo.path}}{{photo.file}}">
+    </ion-slide>  
+      </ion-slides>
+      <div >
+        <h2> {{product.name}}</h2>
+      <h2 *ngIf="product.city_id!=null&&product.area_id!=null">{{product.city_id.name}}-{{product.area_id.name}}</h2>
+    </div>   
+  <div style="height:10px;"></div>
+  <div class="prices" >
+    <ion-row>
+      <ion-title> <strong> الخدمات والمرافق </strong></ion-title>
+    </ion-row>
+  <div style="height:10px;"></div>  
+  <ion-row *ngIf="!more" >
+      <ion-col  style="font-size:12px;" *ngFor="let item of product.facilities_services | slice:0:3" >
+         <p *ngIf="item.fs_id.length!=0"> {{item.fs_id[0].name}}</p>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="!more" >
+      <ion-col  style="font-size:11px;" *ngFor="let item of product.facilities_services | slice:0:3" >
+         <ion-icon *ngIf="item.fs_id.length!=0" >
+        <img style="height:40px;" src="{{photoUrl}}{{item.fs_id[0].icon}}">   
+        </ion-icon> 
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="more" >
+      <ion-col  style="font-size:12px;" *ngFor="let item of product.facilities_services" >
+         <p *ngIf="item.fs_id.length!=0"> {{item.fs_id[0].name}}</p>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="more" >
+      <ion-col  style="font-size:11px;" *ngFor="let item of product.facilities_services" >
+         <ion-icon *ngIf="item.fs_id.length!=0" >
+        <img src="{{photoUrl}}{{item.fs_id[0].icon}}">   
+        </ion-icon> 
+      </ion-col>
+    </ion-row>
+    <button ion-button [outline]="!more" *ngIf="product.facilities_services.length>3"  color="header" (click)="more=!more" >المزيد</button>
+  </div>
+  <div style="height:14px;"></div>
+ 
+  <ion-title ><strong>التفاصيل و الملاحظات</strong></ion-title>
+  <div >
+  <p *ngIf="product.content_info!=null" >{{product.content_info}}</p>  
+  <p *ngIf="product.content!=null" style="text-align:right;">{{product.content}}</p>
+  </div>
+  <div style="height:14px;"></div>  
+
+  <div #map id="map" style="height:40%;margin:10px"></div>
+
+  <div style="height:14px;"></div>
+  <ion-row *ngIf="product.suitable_for!=null" text-wrap style="margin:5px;border:1px solid lightgrey;border-radius:5px">
+    <h2 style="color:#06a283;text-align:center">مناسب ل : {{product.suitable_for}} </h2>
+</ion-row>
+  <div style="text-align:right" >
+      <ion-row *ngIf="product.city_id!=null" style="margin:5px;">
+        <ion-title > المدينه : {{product.city_id.name}}</ion-title>
+      </ion-row>
+      <ion-row *ngIf="product.type_place!=null" style="margin:5px;">
+        <ion-title >نوع المكان : {{product.type_place[0].name}}</ion-title>
+      </ion-row>
+      <ion-row *ngIf="product.councils_men!=null" style="margin:5px;">
+        <ion-title > مجالس الرجال : {{product.councils_men}}</ion-title>
+      </ion-row>
+      <ion-row *ngIf="product.councils_women!=null" style="margin:5px;">
+        <ion-title >مجالس النساء : {{product.councils_women}}</ion-title>
+    </ion-row>
+      <ion-row *ngIf="product.size_place!=null" style="margin:5px;">
+        <ion-title > المساحه : {{product.size_place}} م2</ion-title>
+      </ion-row>
+      <ion-row *ngIf="product.pool_count!=null" style="margin:5px;">
+          <ion-title > عدد المسبح : {{product.pool_count}}</ion-title>
+        </ion-row>
+      <ion-row *ngIf="product.type_rent!=null" style="margin:5px;">
+        <ion-title >نوع الايجار : {{product.type_rent.name}}</ion-title>
+      </ion-row>
+      <ion-row *ngIf="product.num_department!=null" style="margin:5px;">
+        <ion-title >الاقسام : {{product.num_department.name}}</ion-title>
+      </ion-row>
+  <ion-row style="margin:5px;border:1px solid lightgrey;border-radius:5px;text-align:center">
+    <ion-title> <strong style="color:#06a283;text-align:center" >  الأسعار </strong></ion-title>    
+      </ion-row>
+      <ion-row style="margin:5px;">
+        <ion-title >وسط الاسبوع : {{product.middle_week}}</ion-title>
+      </ion-row>      
+      <ion-row  style="margin:5px;">
+        <ion-title >الخميس : {{product.thursday}}</ion-title>
+      </ion-row>     
+       <ion-row style="margin:5px;">
+        <ion-title >الجمعه : {{product.friday}}</ion-title>
+      </ion-row>     
+       <ion-row  style="margin:5px;">
+        <ion-title >عيد الفطر : {{product.eid_al_fitr}}</ion-title>
+      </ion-row>
+      <ion-row  style="margin:5px;">
+        <ion-title >عيد الاضحي : {{product.eid_al_adha}}</ion-title>
+      </ion-row>
+  </div>
+
+    <ion-row>
+      <ion-title><strong>معلومات التواصل</strong></ion-title>
+    </ion-row>
+    <ion-list padding no-lines>
+      <ion-item style="border:1px solid lightgrey !important;border-radius:10px;margin-bottom:10px;"> 
+        <ion-icon name="tablet-portrait" color="secondary" item-start></ion-icon>
+        <ion-title>{{product.mobile}}</ion-title>
+      </ion-item>
+      <ion-item style="border:1px solid lightgrey !important;border-radius:10px;margin-bottom:10px"> 
+        <ion-icon name="logo-twitter" color="secondary" item-start></ion-icon>
+        <ion-title>{{product.twitter}}</ion-title>
+      </ion-item>
+      <ion-item style="border:1px solid lightgrey !important;border-radius:10px;margin-bottom:10px"> 
+        <ion-icon name="logo-instagram" color="secondary" item-start></ion-icon>
+        <ion-title>{{product.instagram}}</ion-title>
+      </ion-item>
+      <ion-item style="border:1px solid lightgrey !important;border-radius:10px;margin-bottom:10px"> 
+        <ion-icon name="logo-facebook" color="secondary" item-start></ion-icon>
+        <ion-title>{{product.facebook}}</ion-title>
+      </ion-item>
+    </ion-list>
+<ion-title><h2 style="color:#06a283" >يرجي التكرم بذكر اسم التطبيق عند التواصل</h2></ion-title>
+  <button ion-button  clear large color="danger" (click)="report();" >
+      <img style="height:30px;margin-left:3px;" src="assets/icon/report.png">
+   <strong> للابلاغ عن مخالفه او معلومه غير دقيقه </strong></button>
+</ion-content>

@@ -1,0 +1,56 @@
+
+<ion-header>
+
+  <ion-toolbar color="header">
+    <ion-buttons right>
+      <button ion-button (click)="goBack()">
+              <ion-icon ><img style="height:20%;width:30%" src="assets/icon/back.png" ></ion-icon>
+            </button>
+    </ion-buttons>
+    <ion-title>بحث</ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content text-center >
+
+    <img src="assets/img/results-img.png">
+  <div class=" fadeIn" padding >      
+    <ion-row >
+      <ion-col>
+        <ion-item class="bounceInRight" style="animation-duration:0.5s">
+          <ion-label>المنطقه</ion-label>
+          <ion-select interface="popover" [(ngModel)]="search1.area" (ionChange)="getcities()" cancelText="الغاء" okText="تم">
+            <ion-option *ngFor="let area of areas" [value]="area.id">{{area.name}}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item class=" bounceInRight" style="animation-duration:0.5s">
+          <ion-label>المدينه</ion-label>
+          <ion-select interface="popover" [(ngModel)]="search1.city">
+            <ion-option *ngFor="let city of cities" [value]="city.id">{{city.name}}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+   
+    </ion-row>
+    <ion-row>
+        <ion-col>
+            <ion-item class=" bounceInRight" style="animation-duration:0.5s">
+              <ion-label>السعر من </ion-label>
+              <ion-input [(ngModel)]="search1.price_from" type="number" ></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+              <ion-item class=" bounceInRight" style="animation-duration:0.5s">
+                <ion-label>السعر الي</ion-label>
+                <ion-input [(ngModel)]="search1.price_to" type="number" ></ion-input>
+              </ion-item>
+            </ion-col>
+    </ion-row>
+    <button  ion-button style="margin-top:10px;" round block color="icon" *ngIf="!srch" large type="submit" (click)="search();"><strong>بحث</strong></button>
+    <ion-spinner *ngIf="srch"></ion-spinner>
+  </div>
+</ion-content>

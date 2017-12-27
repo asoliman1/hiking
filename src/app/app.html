@@ -1,1 +1,40 @@
-<ion-nav [root]="rootPage"></ion-nav>
+<ion-menu type="overlay" side="right" persistent="true" [content]="content">
+
+  <ion-content style="background-color:#292929;">
+
+    <ion-list>
+
+      <ion-item color="menu" menuClose (click)="itemSelected(1);">
+        الصفحه الرئيسية
+        <ion-icon name="home" item-start></ion-icon>
+      </ion-item>
+      <ion-item color="menu" menuClose (click)="itemSelected(2);">
+        تسجيل الملاك
+        <ion-icon name="contact" item-start></ion-icon>
+      </ion-item>
+      <ion-item color="menu" menuClose (click)="itemSelected(3);">
+        دخول الملاك
+        <ion-icon name="log-in" item-start></ion-icon>
+      </ion-item>
+      <ion-item color="menu" menuClose (click)="itemSelected(7);">
+           الأشعارات
+          <ion-icon name="notifications" item-start></ion-icon>
+        </ion-item>
+      <ion-item color="menu" menuClose (click)="itemSelected(4);">
+        اتصل بنا
+        <ion-icon name="call" item-start></ion-icon>
+      </ion-item>
+      <ion-item color="menu" menuClose (click)="itemSelected(5);">
+        شارك التطبيق
+        <ion-icon name="share" item-start></ion-icon>
+      </ion-item>
+      <ion-item color="menu" menuClose (click)="itemSelected(6);">
+        عن التطبيق
+        <ion-icon name="tablet-portrait" item-start></ion-icon>
+      </ion-item>
+
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<ion-nav #content [root]="rootPage"></ion-nav>

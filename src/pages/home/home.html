@@ -1,14 +1,107 @@
 <ion-header>
-  <ion-navbar>
+  <ion-toolbar color="header" >
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-buttons right>
+      <button ion-button (click)="gosearch()">
+        <ion-icon ><img style="height:20%;width:30%" src="assets/icon/search2.png" ></ion-icon>
+      </button>
+    </ion-buttons>
     <ion-title>
-      Ionic Blank
+    <strong> الصفحه الرئيسية </strong>
     </ion-title>
-  </ion-navbar>
+  </ion-toolbar>
+  <ion-segment style="margin-top:0.5px;" (ionChange)="segmentChanged()" [(ngModel)]="type" color="white" >
+      <ion-segment-button style="background:#000;height:50px;" value="new">
+          <img style="height:20px;margin-top:5px" src="assets/icon/new.png">  
+        <h4 style="margin-top:-7px;">جديد</h4>        
+      </ion-segment-button>
+      <ion-segment-button style="background:#000;height:50px"  value="special">
+          <img style="height:20px;margin-top:5px" src="assets/icon/special.png">   
+        <h4 style="margin-top:-7px;">مميز</h4>    
+      </ion-segment-button>
+      <ion-segment-button style="background:#000;height:50px"  value="nearby">
+        <img  style="height:20px;margin-top:5px"  src="assets/icon/near.png">
+        <h4 style="margin-top:-7px;">قريب</h4>
+        </ion-segment-button>
+    </ion-segment>
 </ion-header>
 
-<ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+<ion-content >
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+      </ion-refresher>
+<div [ngSwitch]="type" style="margin-top:-10px"  >
+  <div *ngSwitchCase="'new'" class="fadeIn" >
+    <ion-spinner class="centered-spinner" duration="500" *ngIf="loading_new" ></ion-spinner>                   
+    
+    <h3 text-center *ngIf="stores.length==0&&!loading_new" > لا يوجد جديد </h3>                         
+      <ion-col *ngFor="let store of stores" >
+    <div text-center>
+       <img *ngIf="store.photo!=null" class="fadeInUp" src="{{photo+store.photo}}" (click)="gotoproduct(store)" >
+       <img *ngIf="store.photo==null" class="fadeInUp" src="assets/img/logo.png" (click)="gotoproduct(store)"  >
+      </div>
+    <ion-item no-lines class="home-title fadeInUp" >
+      <ion-title  item-start ><strong style="color:white" >{{store.name}}</strong>
+        <ion-title *ngIf="store.city_id!=null" ><p style="color:white" >{{store.city_id.name}}</p></ion-title>              
+      </ion-title>
+      <div text-center item-end>
+      <button ion-button item-end  color="icon" > 
+       <strong> {{store.friday}} </strong>ريال </button>
+      </div>
+     </ion-item>
+      </ion-col>
+  </div>
+
+  <div *ngSwitchCase="'special'" class="fadeIn" >
+      <ion-spinner class="centered-spinner" duration="500" *ngIf="loading_special" ></ion-spinner>                         
+    <h3 text-center *ngIf="stores_special.length==0&&!loading_special" > لا يوجد مميز </h3>  
+    <ion-col  *ngFor="let store of stores_special" >
+    <div text-center>
+        
+        <img *ngIf="store.photo!=null" class="fadeInUp" src="{{photo+store.photo}}" (click)="gotoproduct(store)" >
+        <img *ngIf="store.photo==null" class="fadeInUp" src="assets/img/logo.png" (click)="gotoproduct(store)"  >
+      </div>
+    <ion-item no-lines class="home-title fadeInUp" >
+      <ion-title  item-start ><strong style="color:white" >{{store.name}}</strong>
+        <ion-title *ngIf="store.city_id!=null" ><p style="color:white" >{{store.city_id.name}}</p></ion-title>              
+      </ion-title>
+     
+      <div text-center item-end>
+      <button ion-button  item-end color="icon" > 
+       <strong> {{store.friday}}</strong>ريال </button>
+      </div>
+     </ion-item>
+    </ion-col>
+</div>
+
+<div *ngSwitchCase="'nearby'" class="fadeIn" >
+    <ion-spinner class="centered-spinner" duration="500" *ngIf="loading_services" ></ion-spinner>                             
+    <h3 text-center style="margin-top:20px;" *ngIf="nearbys.length==0&&!loading_services" > لا يوجد </h3>
+  <ion-col *ngFor="let store of nearbys" >
+    <div text-center>
+        <img *ngIf="store.photo!=null" class="fadeInUp" src="{{photo+store.photo}}" (click)="gotoServices(store)" >
+        <img *ngIf="store.photo==null" class="fadeInUp" src="assets/img/logo.png" (click)="gotoServices(store)" >
+     
+    </div>
+   <ion-item no-lines class="home-title fadeInUp" >
+    <ion-title  item-start ><strong style="color:white" >{{store.title}}</strong>
+      <ion-title *ngIf="store.city_id[0]!=null" ><p style="color:white" >{{store.city_id[0].name}}</p></ion-title>              
+    </ion-title>
+
+    <div text-center item-end>
+    <button ion-button item-end color="icon" > 
+     <strong> {{store.friday}}</strong>ريال </button>
+    </div>
+   </ion-item>
+  </ion-col>
+</div>
+
+</div>
+<ion-infinite-scroll   (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content >
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

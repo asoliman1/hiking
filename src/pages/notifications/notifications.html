@@ -1,0 +1,39 @@
+
+
+<ion-header>
+
+  <ion-navbar color="header" hideBackButton>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>الأشعارات</ion-title>
+    <ion-buttons right>
+      <button ion-button (click)="goBack()">
+        <ion-icon ><img style="height:20%;width:30%" src="assets/icon/back.png" ></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding >
+  
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingText="اسحب للتحديث">
+    </ion-refresher-content>
+  </ion-refresher>
+  
+  <h2 text-center *ngIf="notifications.length==0">لا يوجد اشعارات</h2>
+  <ion-card id="item" class="fadeInUp" *ngFor="let notification of notifications">
+    <ion-card-header>
+      <ion-icon color="icon" name="notifications"></ion-icon> {{notification.message}}
+    </ion-card-header>
+
+    <ion-card-content>
+      {{notification.content}}
+      <p style="text-align:left" > {{notification.created_at}} </p>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
